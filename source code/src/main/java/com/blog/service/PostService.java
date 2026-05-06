@@ -13,80 +13,76 @@ import com.blog.vo.Post;
 @Service
 public class PostService {
 
+	// 1. Perbaikan: Mengubah Field Injection menjadi Constructor Injection dengan
+	// 'final'
+	private final PostRepository postRepository;
+	private final PostJpaRepository jpaRepository;
+
 	@Autowired
-	PostRepository postRepository;
-	
-	@Autowired
-	PostJpaRepository jpaRepository;
+	public PostService(PostRepository postRepository, PostJpaRepository jpaRepository) {
+		this.postRepository = postRepository;
+		this.jpaRepository = jpaRepository;
+	}
 
 	public Post getPost(Long id) {
-		Post post = jpaRepository.findOneById(id);
-		
-		return post;
+		// 2. Perbaikan: Langsung return hasil pencarian
+		return jpaRepository.findOneById(id);
 	}
-	
+
 	public List<Post> getPosts() {
-		List<Post> posts = jpaRepository.findAllByOrderByUpdtDateDesc();
-		return posts;
+		return jpaRepository.findAllByOrderByUpdtDateDesc();
 	}
-	
+
 	public List<Post> getPostsOrderByUpdtAsc() {
-		List<Post> posts = postRepository.findPostOrderByUpdtDateAsc();
-		return posts;
+		return postRepository.findPostOrderByUpdtDateAsc();
 	}
-	
+
 	public List<Post> getPostsOrderByRegDesc() {
-		List<Post> posts = postRepository.findPostOrderByRegDateDesc();
-		return posts;
+		return postRepository.findPostOrderByRegDateDesc();
 	}
-	
+
 	public List<Post> searchPostByTitle(String query) {
-		List<Post> posts = jpaRepository.findByTitleContainingOrderByUpdtDateDesc(query);
-		return posts;
+		return jpaRepository.findByTitleContainingOrderByUpdtDateDesc(query);
 	}
-	
+
 	public List<Post> searchPostByContent(String query) {
-		List<Post> posts = jpaRepository.findByContentContainingOrderByUpdtDateDesc(query);
-		return posts;
+		return jpaRepository.findByContentContainingOrderByUpdtDateDesc(query);
 	}
-	
-	public boolean  savePost(Post post) {
-		Post result = jpaRepository.save(post);
-		boolean isSuccess = true;
-		
-		if(result == null) {
-			isSuccess = false;
-		}
-		
-		return isSuccess;
+
+	public boolean savePost(Post post) {
+		// 3. Perbaikan: Disederhanakan menjadi satu baris ekspresi
+		return jpaRepository.save(post) != null;
 	}
-	
+
 	public boolean deletePost(Long id) {
 		Post result = jpaRepository.findOneById(id);
-		
-		if(result == null)
+
+		if (result == null) {
 			return false;
-		
-		jpaRepository.deleteById(id);		
+		}
+
+		jpaRepository.deleteById(id);
 		return true;
 	}
-	
+
 	public boolean updatePost(Post post) {
 		Post result = jpaRepository.findOneById(post.getId());
-		
-		if(result == null)
+
+		if (result == null) {
 			return false;
-		
-		if(!StringUtils.isEmpty(post.getTitle())) {
+		}
+
+		// HAPUS tanda seru (!) di depan StringUtils
+		if (StringUtils.hasText(post.getTitle())) {
 			result.setTitle(post.getTitle());
 		}
-		
-		if(!StringUtils.isEmpty(post.getContent())) {
+
+		// HAPUS tanda seru (!) di depan StringUtils
+		if (StringUtils.hasText(post.getContent())) {
 			result.setContent(post.getContent());
 		}
-		
+
 		jpaRepository.save(result);
-		
 		return true;
 	}
 }

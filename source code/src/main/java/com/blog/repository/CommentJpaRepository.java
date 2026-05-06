@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import com.blog.vo.Comment;
 
 @Repository
-public interface CommentJpaRepository  extends JpaRepository<Comment, Serializable> {
+public interface CommentJpaRepository extends JpaRepository<Comment, Serializable> {
 
 	List<Comment> findAllByPostIdOrderByRegDateDesc(Long postId);
 
-	List<Comment> findByPostIdAndCommentContainingOrderByRegDateDesc(Long postId, String query);
+	// Perbaikan: Mengubah 'Comment' menjadi 'Content' pada nama fungsi
+	List<Comment> findByPostIdAndContentContainingOrderByRegDateDesc(Long postId, String query);
 
 	Comment findOneById(Long id);
 }

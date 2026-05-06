@@ -11,41 +11,43 @@ import com.blog.vo.Comment;
 @Service
 public class CommentService {
 
+	// 1. Perbaikan: Constructor Injection dengan 'final'
+	private final CommentJpaRepository commentJpaRepository;
+
 	@Autowired
-	CommentJpaRepository commentJpaRepository;
-	
-	public boolean  saveComment(Comment comment) {
-		Comment result = commentJpaRepository.save(comment);
-		boolean isSuccess = true;
-		
-		if(result == null) {
-			isSuccess = false;
-		}
-		
-		return isSuccess;
+	public CommentService(CommentJpaRepository commentJpaRepository) {
+		this.commentJpaRepository = commentJpaRepository;
+	}
+
+	public boolean saveComment(Comment comment) {
+		// 2. Perbaikan: Disederhanakan menjadi satu baris ekspresi boolean
+		return commentJpaRepository.save(comment) != null;
 	}
 
 	public List<Comment> getCommentList(Long postId) {
-		List<Comment> postList = commentJpaRepository.findAllByPostIdOrderByRegDateDesc(postId);
-		return postList;
+		// 3. Perbaikan: Langsung return list-nya
+		return commentJpaRepository.findAllByPostIdOrderByRegDateDesc(postId);
 	}
-	
+
 	public List<Comment> searchCommentList(Long postId, String query) {
-		List<Comment> postList = commentJpaRepository.findByPostIdAndCommentContainingOrderByRegDateDesc(postId, query);
-		return postList;
+		// PERBAIKAN FATAL: Mengubah kata 'Comment' menjadi 'Content' pada pemanggilan
+		// fungsi
+		return commentJpaRepository.findByPostIdAndContentContainingOrderByRegDateDesc(postId, query);
 	}
 
 	public Comment getComment(Long id) {
-		Comment comment = commentJpaRepository.findOneById(id);
-		return comment;
+		// 3. Perbaikan: Langsung return object-nya
+		return commentJpaRepository.findOneById(id);
 	}
 
 	public boolean deleteComment(Long id) {
 		Comment result = commentJpaRepository.findOneById(id);
-		
-		if(result == null)
+
+		// Menambahkan kurung kurawal agar lebih sesuai dengan clean code standard
+		if (result == null) {
 			return false;
-		
+		}
+
 		commentJpaRepository.deleteById(id);
 		return true;
 	}

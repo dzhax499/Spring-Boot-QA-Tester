@@ -1,21 +1,20 @@
 package com.blog.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.blog.repository.PostJpaRepository;
@@ -23,7 +22,7 @@ import com.blog.repository.PostRepository;
 import com.blog.vo.Post;
 
 @ExtendWith(MockitoExtension.class)
-public class PostServiceTest {
+class PostServiceTest {
 
     @InjectMocks
     private PostService postService;
@@ -35,12 +34,12 @@ public class PostServiceTest {
     private PostJpaRepository jpaRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // MockitoExtension handles initialization
     }
 
     @Test
-    public void testGetPost() {
+    void testGetPost() {
         // Arrange
         Long id = 1L;
         Post post = new Post(id, "user", "title", "content");
@@ -56,7 +55,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testGetPosts() {
+    void testGetPosts() {
         // Arrange
         List<Post> posts = new ArrayList<>();
         posts.add(new Post(1L, "user1", "title1", "content1"));
@@ -72,7 +71,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testSavePost_Success() {
+    void testSavePost_Success() {
         // Arrange
         Post post = new Post("user", "title", "content");
         when(jpaRepository.save(any(Post.class))).thenReturn(post);
@@ -86,7 +85,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testSavePost_Fail() {
+    void testSavePost_Fail() {
         // Arrange
         Post post = new Post("user", "title", "content");
         when(jpaRepository.save(any(Post.class))).thenReturn(null);
@@ -100,7 +99,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testDeletePost_Success() {
+    void testDeletePost_Success() {
         // Arrange
         Long id = 1L;
         Post post = new Post(id, "user", "title", "content");
@@ -116,7 +115,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testDeletePost_NotFound() {
+    void testDeletePost_NotFound() {
         // Arrange
         Long id = 1L;
         when(jpaRepository.findOneById(id)).thenReturn(null);
@@ -131,7 +130,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testUpdatePost_Success() {
+    void testUpdatePost_Success() {
         // Arrange
         Post existingPost = new Post(1L, "user", "old title", "old content");
         Post updateParam = new Post(1L, "new title", "new content");
@@ -148,7 +147,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testUpdatePost_NotFound() {
+    void testUpdatePost_NotFound() {
         // Arrange
         Post updateParam = new Post(1L, "new title", "new content");
         when(jpaRepository.findOneById(1L)).thenReturn(null);
@@ -162,7 +161,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testSearchPostByTitle() {
+    void testSearchPostByTitle() {
         // Arrange
         String query = "Spring";
         List<Post> posts = new ArrayList<>();
@@ -179,7 +178,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testSearchPostByContent() {
+    void testSearchPostByContent() {
         // Arrange
         String query = "testing";
         List<Post> posts = new ArrayList<>();

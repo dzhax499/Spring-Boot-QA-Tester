@@ -30,7 +30,7 @@ public class Comment {
     
     @NotBlank(message = "Comment tidak boleh kosong")
     @Column(name="comment_content")
-	private String comment;
+	private String content;
     
     @Column(name="regDate")
 	private Date regDate;
@@ -41,7 +41,7 @@ public class Comment {
 	public Comment(Long postId, String user, String comment) {
 		this.postId = postId;
 		this.user = user;
-		this.comment = comment;
+		this.content = comment;
 		this.regDate = new Date();
 	}
 
@@ -69,12 +69,12 @@ public class Comment {
 		this.user = user;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String comment) {
+		this.content = comment;
 	}
 
 	public Date getRegDate() {

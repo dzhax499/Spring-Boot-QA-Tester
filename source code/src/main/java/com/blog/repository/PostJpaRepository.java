@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.blog.vo.Post;
 
-@Repository("PostJpaRepository")
+@Repository
 public interface PostJpaRepository extends JpaRepository<Post, Serializable> {
 	Post findOneById(Long id);
 	

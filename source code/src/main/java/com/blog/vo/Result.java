@@ -1,23 +1,24 @@
 package com.blog.vo;
 
 public class Result {
-	int result;
+	// Perbaikan: Mengubah nama variabel dari 'result' menjadi 'code'
+	int code;
 	String message;
 
 	public Result() {
 	}
 
-	public Result(int result, String message) {
-		this.result = result;
+	public Result(int code, String message) {
+		this.code = code;
 		this.message = message;
 	}
 
-	public int getResult() {
-		return result;
+	public int getCode() {
+		return code;
 	}
 
-	public void setResult(int result) {
-		this.result = result;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
 	public String getMessage() {
@@ -27,5 +28,4 @@ public class Result {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 }

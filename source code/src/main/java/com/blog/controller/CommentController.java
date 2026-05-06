@@ -3,6 +3,7 @@ package com.blog.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
-import javax.validation.Valid;
-
 import com.blog.service.CommentService;
 import com.blog.vo.Comment;
 import com.blog.vo.Result;
@@ -22,15 +21,19 @@ import com.blog.vo.Result;
 @RestController
 public class CommentController {
 
+	private final CommentService commentService;
+
 	@Autowired
-	CommentService commentService;
+	public CommentController(CommentService commentService) {
+		this.commentService = commentService;
+	}
 
 	@PostMapping("/comment")
 	public Object savePost(HttpServletResponse response, @Valid @RequestBody Comment commentParam) {
 		Comment comment = new Comment(
 				commentParam.getPostId(),
 				HtmlUtils.htmlEscape(commentParam.getUser()),
-				HtmlUtils.htmlEscape(commentParam.getComment()));
+				HtmlUtils.htmlEscape(commentParam.getContent()));
 		boolean isSuccess = commentService.saveComment(comment);
 
 		if (isSuccess) {
@@ -44,15 +47,13 @@ public class CommentController {
 	// for Exercise 4-1
 	@GetMapping("/comments")
 	public List<Comment> getComments(@RequestParam("post_id") Long postId) {
-		List<Comment> comments = commentService.getCommentList(postId);
-		return comments;
+		return commentService.getCommentList(postId);
 	}
 
-	// for Exercise 4-2
+	// for Exercise 4-2	
 	@GetMapping("/comment")
 	public Comment getComment(@RequestParam("id") Long id) {
-		Comment comment = commentService.getComment(id);
-		return comment;
+		return commentService.getComment(id);
 	}
 
 	// for Exercise 4-3
@@ -71,7 +72,6 @@ public class CommentController {
 	// for Exercise 4-5
 	@GetMapping("/comments/search")
 	public List<Comment> searchComments(@RequestParam("post_id") Long postId, @RequestParam("query") String query) {
-		List<Comment> comments = commentService.searchCommentList(postId, query);
-		return comments;
+		return commentService.searchCommentList(postId, query);
 	}
 }
