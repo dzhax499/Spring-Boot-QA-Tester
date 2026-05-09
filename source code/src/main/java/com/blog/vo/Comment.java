@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -32,6 +34,7 @@ public class Comment {
     @Column(name="comment_content")
 	private String content;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     @Column(name="regDate")
 	private Date regDate;
 
