@@ -66,12 +66,14 @@
             <div class="card-body">
               <form>
               	<div class="form-group">
-					<input type="text" class="form-control" id="comment_user_text" placeholder="Username">
+						<input type="text" class="form-control" id="comment_user_text" placeholder="Username" required>
+						<small class="text-danger d-none" id="comment_user_error"></small>
 				</div>
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" id="comment_text"></textarea>
+                  <textarea class="form-control" rows="3" id="comment_text" required></textarea>
+                  <small class="text-danger d-none" id="comment_text_error"></small>
                 </div>
-                <button type="submit" class="btn btn-primary" id="create_comment_btn">Write Comment</button>
+                <button type="button" class="btn btn-primary" id="create_comment_btn">Write Comment</button>
               </form>
             </div>
           </div>
@@ -106,13 +108,16 @@
 				</div>
 				<div class="modal-body">
 					<form>
+            <input type="hidden" id="modify_user_text">
 						<div class="form-group">
 							<label for="modify_title_text">Title</label>
-							<input type="text" class="form-control" id="modify_title_text" placeholder="Title">
+              <input type="text" class="form-control" id="modify_title_text" placeholder="Title" required>
+              <small class="text-danger d-none" id="modify_title_error"></small>
 						</div>
 						<div class="form-group">
 							<label for="modify_content_text">Content</label>
-							<textarea class="form-control" rows="3" id="modify_content_text"></textarea>
+              <textarea class="form-control" rows="3" id="modify_content_text" required></textarea>
+              <small class="text-danger d-none" id="modify_content_error"></small>
 						</div>
 					</form>
 				</div>

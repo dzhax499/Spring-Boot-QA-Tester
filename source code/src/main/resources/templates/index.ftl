@@ -72,25 +72,28 @@ body {
 					</button>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form id="create_post_form" novalidate>
 						<div class="form-group">
 							<label for="create_user_text">User Name</label>
-							<input type="text" class="form-control" id="create_user_text" placeholder="User"> 
+							<input type="text" class="form-control" id="create_user_text" placeholder="User" required>
+							<small class="text-danger d-none" id="create_user_error"></small>
 						</div>
 						<div class="form-group">
 							<label for="create_title_text">Title</label>
-							<input type="text" class="form-control" id="create_title_text" placeholder="Title">
+							<input type="text" class="form-control" id="create_title_text" placeholder="Title" required>
+							<small class="text-danger d-none" id="create_title_error"></small>
 						</div>
 						<div class="form-group">
 							<label for="create_content_text">Content</label>
-							<textarea class="form-control" rows="3" id="create_content_text"></textarea>
+							<textarea class="form-control" rows="3" id="create_content_text" required></textarea>
+							<small class="text-danger d-none" id="create_content_error"></small>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save_post_btn">Save Post</button>
+						<button type="submit" class="btn btn-primary" id="save_post_btn" form="create_post_form">Save Post</button>
 				</div>
 			</div>
 		</div>
@@ -107,7 +110,7 @@ body {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
-	<script src="/js/index.js"></script>
+	<script src="/js/index.js?v=20260511"></script>
 </body>
 
 </html>
