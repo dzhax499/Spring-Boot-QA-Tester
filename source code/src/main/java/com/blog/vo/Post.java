@@ -7,13 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "post")
+@Table(
+		name = "post",
+		indexes = {
+				@Index(name = "idx_post_updt_date", columnList = "updtDate"),
+				@Index(name = "idx_post_reg_date", columnList = "regDate")
+		}
+)
 public class Post {
 
     @Id

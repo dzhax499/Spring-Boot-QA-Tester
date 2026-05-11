@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,13 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "comment")
+@Table(
+		name = "comment",
+		indexes = {
+				@Index(name = "idx_comment_post_reg_date", columnList = "postId, regDate"),
+				@Index(name = "idx_comment_post_id", columnList = "postId")
+		}
+)
 public class Comment {
 
 	@Id
