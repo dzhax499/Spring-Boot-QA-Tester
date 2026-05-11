@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,13 +14,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(
-		name = "comment",
-		indexes = {
-				@Index(name = "idx_comment_post_reg_date", columnList = "postId, regDate"),
-				@Index(name = "idx_comment_post_id", columnList = "postId")
-		}
-)
+@Table(name = "comment")
 public class Comment {
 
 	@Id
@@ -34,11 +27,11 @@ public class Comment {
 	private Long postId;
     
     @NotBlank(message = "User tidak boleh kosong")
-    @Column(name="author")
+    @Column(name="user")
 	private String user;
     
     @NotBlank(message = "Comment tidak boleh kosong")
-    @Column(name="comment_content")
+    @Column(name="comment")
 	private String content;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")

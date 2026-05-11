@@ -29,7 +29,7 @@ public class Post {
 	private Long id;
     
     @NotBlank(message = "User tidak boleh kosong")
-    @Column(name="author")
+	@Column(name="user")
 	private String user;
     
     @NotBlank(message = "Title tidak boleh kosong")

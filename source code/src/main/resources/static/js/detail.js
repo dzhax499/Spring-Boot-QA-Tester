@@ -57,7 +57,7 @@ $(document).ready(function () {
           '<div class="media mb-4"><div class="media-body"><h5 class="mt-0">' +
             e.user +
             "</h5>" +
-            e.comment +
+            e.content +
             "</div></div>",
         );
       });
@@ -133,17 +133,22 @@ $(document).ready(function () {
   $("#create_comment_btn").click(function () {
     clearCommentErrors();
     const postId = $("#detail_post_id").attr("value");
-    const user = $("#comment_user_text").val();
-    const comment = $("#comment_text").val();
+    const user = $("#comment_user_text").val().trim();
+    const commentText = $("#comment_text").val().trim();
 
-    console.log(postId);
-    console.log(user);
-    console.log(comment);
+    // Client-side quick validation to avoid sending empty fields
+    const clientErrors = {};
+    if (!user) clientErrors.user = "User tidak boleh kosong";
+    if (!commentText) clientErrors.content = "Comment tidak boleh kosong";
+    if (Object.keys(clientErrors).length > 0) {
+      showCommentErrors(clientErrors);
+      return;
+    }
 
     const param = {
       postId: postId,
       user: user,
-      comment: comment,
+      content: commentText, // backend expects 'content'
     };
 
     $.ajax({
@@ -161,9 +166,7 @@ $(document).ready(function () {
           showCommentErrors(err.responseJSON.errors);
           return;
         }
-        alert(
-          err.responseJSON ? err.responseJSON.message : "Validation failed",
-        );
+        alert(err.responseJSON?.message ?? "Validation failed");
       },
     );
   });
